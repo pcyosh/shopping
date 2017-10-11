@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+
+<div id="layout">
+
+  <h1>子组件给我传递的数据是{{msg}}</h1>
+
+  <child @fn="get"></child>
+
+</div>
+
+
+<template id="child">
+  <div @click="send">
+    我是子组件
+  </div>
+</template>
+
+</body>
+</html>
+
+<script>
+
+  let child={
+    template:"#child",
+    data() {
+      return {
+        msg:"hello vue"
+      }
+    },
+    methods:{
+      send() {
+        this.$emit("fn",this.msg);//发射  参数1：让父组件的哪个事件执行  参数2：向父组件传递的数据
+      }
+    }
+  }
+  new Vue({
+    el:"#layout",
+    components:{child},
+    data:{
+      msg:"",
+      a:"tm2"
+    },
+    methods:{
+      get(x){  //fn 事件函数
+        this.msg=x;
+      }
+
+    }
+
+  })
+</script>
